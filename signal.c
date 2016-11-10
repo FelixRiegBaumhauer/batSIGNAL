@@ -11,8 +11,9 @@ int when_to_fire=2;
   the pid is printed before we give SIGUSR1 a value
  */
 
+//the specially made signal handler
 static void sighandler(int signo){
-  if(signo == SIGINT){
+  if(signo == SIGINT){//one case
     printf("Check test.txt for a message");
     char message[40] = "SIGINT was called"; 
     int fd = open("test.txt", O_WRONLY);
@@ -20,7 +21,7 @@ static void sighandler(int signo){
     close(fd);
     exit(0);
   }
-  if(signo == SIGUSR1){
+  if(signo == SIGUSR1){//other case
     int p_pro;
     p_pro=getppid();
     printf("SIGUSR1 was invoked--Parent pid is: %d\n", p_pro);
@@ -28,7 +29,7 @@ static void sighandler(int signo){
 }
 
 int main(){
-  int count = 0;
+  int count = 0;//so we can fire SIGUSR1 once at a specific round
   
   while( 1 > 0){
     int pid;
